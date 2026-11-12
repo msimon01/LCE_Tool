@@ -27,7 +27,8 @@ pytest              # alle Tests
 | lce/ | Rechenkern ohne Bezug zur Ausgabe |
 | lce/einheiten.py | einzige Stelle für Einheitenumrechnungen |
 | lce/daten_laden.py | CSV einlesen und prüfen |
-| ausgabe/ | Konsolenausgabe (später CSV) |
+| lce/masse.py | flächenbezogene Masse je Schicht und Variante |
+| ausgabe/ | Konsolenausgabe und CSV (Dezimalkomma, UTF-8 mit BOM) |
 | tests/ | pytest-Tests, arbeiten mit temporären Kopien von daten/ |
 | ergebnisse/ | erzeugte Ergebnisse (nicht versioniert) |
 | daten/, prompts/, protokoll.xlsx | von uns gepflegt, vom Code nur gelesen |
@@ -39,3 +40,4 @@ pytest              # alle Tests
 | P00 | 12.11.2026 | Regeln, Strukturvorschlag |
 | P01 | 12.11.2026 | Grundgerüst; alle CSV laden und prüfen (Pflichtspalten, leere Werte, Zahlen, Materialverweise, Anteile inhomogener Schichten, anpassbar, dicke_m); Konsolenübersicht |
 | P01a | 12.11.2026 | Prüfung auf doppelte Schlüssel (IDs, Parameter, Jahre, Position je Variante) |
+| P02 | 12.11.2026 | Flächenbezogene Masse je Schicht und Variante; erste CSV-Ausgabe ergebnisse/masse.csv; Schichtliste aus P01 in der Konsole entfernt (doppelt zur Massentabelle) |
