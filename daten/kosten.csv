@@ -1,0 +1,21 @@
+material_id;kosten_fix_eur_m2;kosten_je_cm_eur_m2;abbruch_fix_eur_m2;abbruch_je_cm_eur_m2;status;hinweis
+stahlbeton;0;9.5;0;2.5;geschätzt;Ortbeton inkl. Schalung und Bewehrung, brutto
+betonstein;0;6.0;0;1.5;geschätzt;
+kalksandstein;0;6.0;0;1.5;geschätzt;
+hochlochziegel;0;5.0;0;1.5;geschätzt;
+vormauerziegel;0;12.0;0;2.0;geschätzt;
+eps;45;2.0;12;0.3;geschätzt;WDVS-System ohne Oberputz (Kleber, Dübel, Armierung)
+xps;45;3.0;12;0.3;geschätzt;
+pur;50;3.5;12;0.3;geschätzt;
+steinwolle;55;3.0;15;0.3;geschätzt;WDVS-System ohne Oberputz
+glaswolle;5;0.8;3;0.1;geschätzt;Gefachdämmung
+holzfaser;50;3.5;12;0.3;geschätzt;als Putzträger bzw. WDVS
+kvh;0;8.0;0;1.0;geschätzt;Ständerwerk, je cm Schichtdicke bei 100 % Anteil
+osb;0;13.0;2;0.5;geschätzt;
+gipskarton;10;12.0;3;1.0;geschätzt;
+gipsputz;10;8.0;5;1.0;geschätzt;
+kalkzementputz;20;15.0;5;1.0;geschätzt;Oberputz bzw. Außenputz
+stahl;0;40.0;0;2.0;geschätzt;
+staenderwerk_stahl;15;1.0;3;0.1;geschätzt;
+pe_folie;5;0;1;0;geschätzt;
+luft;0;0;0;0;Norm;keine Kosten

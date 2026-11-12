@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+
+# erzeugte Ergebnisse (werden bei jedem Lauf neu geschrieben)
+ergebnisse/*
+!ergebnisse/.gitkeep
+
+# lizenzierte Unterlagen nie versionieren (Normen, BKI)
+*.pdf
+*BKI*
+
+# Windows / OneDrive
+desktop.ini
+Thumbs.db
+
+# Excel-Sperrdateien
+~$*
