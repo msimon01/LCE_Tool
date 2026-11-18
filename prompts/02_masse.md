@@ -55,12 +55,12 @@ Eine inhomogene Schicht zeigt in der Konsole die Originalangabe kvh:0.12|glaswol
 Den Ordner ergebnisse/ legt das Programm selbst an, falls er fehlt.
 So prüft ihr es: Startet pytest und python main.py und öffnet dann ergebnisse/masse.csv per Doppelklick in Excel. Die Zahlen sollten mit Komma in eigenen Spalten stehen. Eine Summe könnt ihr von Hand nachrechnen: 0,015·900 + 0,20·2362 + 0,16·25 + 0,01·1800 = 507,9 kg/m².
 
-# Antwort
+# Unsere Antwort 1
 
 Entferne die Liste aus P01.
 
 
-# Antwort der KI
+# Antwort der KI 1
 
 Die Schichtliste aus P01 ist entfernt. Die Konsole zeigt jetzt Zeilen je Datei, die Anzahl „geschätzt“ und die Massentabelle. Alle 39 Tests laufen grün.
 

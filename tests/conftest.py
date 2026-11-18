@@ -59,3 +59,16 @@ def ersetze_text(pfad: Path, alt: str, neu: str) -> None:
     text = pfad.read_text(encoding="utf-8-sig")
     assert alt in text, f"'{alt}' nicht in {pfad.name} gefunden"
     pfad.write_text(text.replace(alt, neu, 1), encoding="utf-8")
+
+
+# Feste Kopie der Daten für Rechentests (Entwicklungsplan Abschnitt 8): bleibt gültig,
+# wenn daten/ später geändert wird. Sollwerte gelten für diesen Datenstand.
+TESTDATEN = PROJEKTORDNER / "tests" / "testdaten"
+
+
+@pytest.fixture(scope="session")
+def testdaten():
+    from lce.daten_laden import lade_daten
+    erg = lade_daten(TESTDATEN)
+    assert erg.ok, erg.fehler
+    return erg.daten

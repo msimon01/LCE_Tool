@@ -18,3 +18,9 @@ Thumbs.db
 
 # Excel-Sperrdateien
 ~$*
+
+# Arbeitsordner der Claude-App (nicht Teil des Projekts)
+Claude outputs/
+
+# lokale Streamlit-Zugangsdaten nie hochladen
+.streamlit/secrets.toml

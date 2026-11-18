@@ -1,0 +1,15 @@
+variante;position;schicht;material;dicke_m;anpassbar;quelle;anforderung_din4108_3
+Stahlbeton + EPS-WDVS;1;Innenputz;gipsputz;0.015;0;DIN 4108-3:2024-03 5.3.2.1 (kein rechnerischer Tauwassernachweis nötig), Dicken Beispielwerte;Innenputz erforderlich
+Stahlbeton + EPS-WDVS;2;Tragschicht;stahlbeton;0.20;0;Dicke Beispielwert (Statik);Normalbeton nach DIN EN 206 bzw. DIN 1045-2
+Stahlbeton + EPS-WDVS;3;Dämmung WDVS;eps;0.16;1;Dicke wird auf Ziel-U angepasst;bauaufsichtlich zugelassenes WDVS
+Stahlbeton + EPS-WDVS;4;Außenputz;kalkzementputz;0.010;0;Dicke Beispielwert (Systemputz);wasserabweisend nach Tab. 5 (Ww ≤ 0,5 / sd ≤ 2,0 m / Ww·sd ≤ 0,2)
+Hochlochziegel + Mineralwolle-WDVS;1;Innenputz;gipsputz;0.015;0;DIN 4108-3:2024-03 5.3.2.1 (kein rechnerischer Tauwassernachweis nötig), Dicken Beispielwerte;Innenputz erforderlich
+Hochlochziegel + Mineralwolle-WDVS;2;Tragschicht;hochlochziegel;0.175;0;Dicke Beispielwert (Statik);Mauerwerk nach DIN EN 1996-1-1
+Hochlochziegel + Mineralwolle-WDVS;3;Dämmung WDVS;steinwolle;0.16;1;Dicke wird auf Ziel-U angepasst;bauaufsichtlich zugelassenes WDVS
+Hochlochziegel + Mineralwolle-WDVS;4;Außenputz;kalkzementputz;0.010;0;Dicke Beispielwert (Systemputz);wasserabweisend nach Tab. 5 (Ww ≤ 0,5 / sd ≤ 2,0 m / Ww·sd ≤ 0,2)
+Holzrahmen + Holzfaser;1;Bekleidung innen;gipskarton;0.0125;0;DIN 4108-3:2024-03 5.3.2.3 b) (kein rechnerischer Tauwassernachweis nötig), Holzschutz nach DIN 68800-2, Dicken Beispielwerte;raumseitige Bekleidung
+Holzrahmen + Holzfaser;2;Dampfbremse;pe_folie;0.0002;0;ergänzt, da OSB 15 mm nach DIN EN ISO 10456 nur sd ≈ 0,45 bis 0,75 m erreicht;raumseitige diffusionshemmende Schicht sd,i ≥ 2,0 m (PE nach DIN EN ISO 10456 Tab. 4 ≈ 50 m)
+Holzrahmen + Holzfaser;3;Beplankung / Aussteifung;osb;0.015;0;Dicke Beispielwert;Aussteifung
+Holzrahmen + Holzfaser;4;Gefach (12 % KVH, 88 % Glaswolle);kvh:0.12|glaswolle:0.88;0.20;1;Dicke wird auf Ziel-U angepasst, Holzanteil Annahme;Mineralwolle nach DIN EN 13162
+Holzrahmen + Holzfaser;5;Holzfaser-Putzträger;holzfaser;0.060;0;Dicke Beispielwert;WDVS aus Holzfaserdämmplatten nach DIN EN 13171
+Holzrahmen + Holzfaser;6;Außenputz;kalkzementputz;0.008;0;Dicke Beispielwert (Systemputz);wasserabweisendes Putzsystem mit sd ≤ 0,7 m

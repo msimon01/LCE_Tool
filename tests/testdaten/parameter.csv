@@ -1,0 +1,33 @@
+schluessel;wert;einheit;beschreibung;status
+zeitraum_a;50;a;Betrachtungszeitraum, BNB 2.1.1 und QNG;BNB
+heizgradstunden_kkh;79;kKh/a;berechnet aus DIN/TS 18599-10 Tab. E.1 (Referenzort Essen, Region 5), Innentemperatur 20 °C, Heizgrenze 15 °C, Monatsverfahren;berechnet
+zins;0.015;1/a;Diskontierungszinssatz, BNB 2.1.1 Anlage 4;BNB
+preissteigerung_bau;0.02;1/a;Preissteigerung Bau- und Dienstleistungen, BNB 2.1.1 Anlage 4;BNB
+preissteigerung_energie;0.05;1/a;Preissteigerung Energie, BNB 2.1.1 Anlage 4;BNB
+geg_referenz_u;0.28;W/(m²K);Referenzgebäude Außenwand, GModG Anlage 1 Nr. 1.1 (unverändert gegenüber GEG);GModG
+startjahr;2027;a;erstes Nutzungsjahr;Annahme
+geschosshoehe_m;2.75;m;Geschosshöhe für den Flächenverlust (bei IFC aus den Geschossen ermittelt);geschätzt
+flaechenwert_baukosten;3000;€/m²;Baukosten je m² Nettoraumfläche (KG 300+400, brutto), aus BKI Gebäude Neubau zu ersetzen;geschätzt
+flaechenwert_marktwert;4500;€/m²;Marktwert je m² Wohnfläche Neubau (Essen), aus Grundstücksmarktbericht zu ersetzen;geschätzt
+co2_preis_im_energiepreis;55;€/t;CO2-Preis, der im heutigen Gaspreis bereits enthalten ist (BEHG-Korridor 2026 55 bis 65 €/t, Untergrenze);geschätzt
+co2_schattenpreis;195;€/t;UBA Methodenkonvention 3.1, Klimakosten 2020 (Preisbasis 2020) bei Höhergewichtung der Gegenwart;UBA
+co2_schattenpreis_hoch;680;€/t;UBA Methodenkonvention 3.1, Klimakosten 2020 bei Gleichgewichtung der Generationen;UBA
+qng_grenzwert;24;kg CO2e/(m²·a);QNG-PLUS Wohngebäude, Anforderungswert Treibhausgase je m² NRF und Jahr (Anhangdokument prüfen);prüfen
+rsi_m2k_w;0.13;m²K/W;Wärmeübergangswiderstand horizontal innen;DIN EN ISO 6946
+rse_m2k_w;0.04;m²K/W;Wärmeübergangswiderstand horizontal außen;DIN EN ISO 6946
+ziel_u_w_m2k;0.20;W/(m²K);Ziel-U-Wert Außenwand für den Variantenvergleich, Festlegung der Gruppe (unter Referenzwert GModG 0,28);Annahme
+optimierung_toleranz;0.05;-;Optimaler Bereich: Wert höchstens 5 % über dem Minimum;Annahme
+optimierung_d_min_m;0.02;m;kleinste untersuchte Dicke der anpassbaren Schicht;Annahme
+optimierung_d_max_m;0.60;m;größte untersuchte Dicke der anpassbaren Schicht;Annahme
+optimierung_schritt_m;0.005;m;Schrittweite der Dickenvariation;Annahme
+sensitivitaet_kosten;0.20;-;Robustheit: Baustoff- und Abbruchkosten ± Anteil;Annahme
+sensitivitaet_energiepreis;0.20;-;Robustheit: Energiepreis ± Anteil;Annahme
+sensitivitaet_wirtschaft;0.20;-;Robustheit: Zins und Preissteigerungen ± Anteil (relativ);Annahme
+sensitivitaet_nutzungsdauer;0.20;-;Robustheit: Nutzungsdauern ± Anteil;Annahme
+sensitivitaet_kennwerte;0.10;-;Robustheit: GWP- und PENRT-Kennwerte der Baustoffe ± Anteil;Annahme
+sensitivitaet_energiefaktoren;0.10;-;Robustheit: Emissions- und Primärenergiefaktoren der Energieträger ± Anteil;Annahme
+sensitivitaet_heizgradstunden;0.10;-;Robustheit: Heizgradstunden ± Anteil;Annahme
+bewertung_gewicht_gwp;1;-;Gesamtbewertung: Gewicht GWP (relativ zu den anderen Gewichten);Annahme
+bewertung_gewicht_penrt;1;-;Gesamtbewertung: Gewicht PENRT;Annahme
+bewertung_gewicht_lcc;1;-;Gesamtbewertung: Gewicht Lebenszykluskosten;Annahme
+ziel_wanddicke_m;0.36;m;Zielwanddicke für den Vergleich bei gleicher Wanddicke;Annahme

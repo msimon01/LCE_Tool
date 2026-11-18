@@ -1,14 +1,23 @@
-"""Start des LCE-Tools: python main.py (aus dem Projektordner)."""
+"""Start des LCE-Tools in der Konsole: python main.py (aus dem Projektordner).
+
+Die Oberfläche startet mit: streamlit run app.py (bzw. start.bat).
+"""
 
 from __future__ import annotations
 
 import sys
 from pathlib import Path
 
-from ausgabe.csv_export import schreibe_masse_csv
-from ausgabe.konsole import zeige_datei, zeige_fehler, zeige_masse, zeige_uebersicht
+from ausgabe.csv_export import schreibe_ergebnisse
+from ausgabe.konsole import (zeige_dateien, zeige_einstellungen, zeige_ergebnis, zeige_fehler,
+                             zeige_masse, zeige_optimierung, zeige_uebersicht)
+from lce.berechnung import berechne, standard_einstellungen
 from lce.daten_laden import lade_daten
-from lce.masse import masse_je_bestandteil, masse_je_schicht, masse_je_variante
+from lce.masse import masse_je_schicht, masse_je_variante
+from lce.oekobilanz import RUNDUNGSREGELN
+from lce.optimierung import optimiere, suchbereich_aus_daten
+from lce.verlauf import verlauf
+from lce.waermeschutz import Berechnungsfehler
 
 PROJEKTORDNER = Path(__file__).resolve().parent
 DATENORDNER = PROJEKTORDNER / "daten"
@@ -19,20 +28,32 @@ def main() -> int:
     # Windows-Konsole: Umlaute und Pfeile sicher ausgeben
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
-    ergebnis = lade_daten(DATENORDNER)
-    if not ergebnis.ok:
-        zeige_fehler(ergebnis)
+    geladen = lade_daten(DATENORDNER)
+    if not geladen.ok:
+        zeige_fehler(geladen)
         return 1
-    zeige_uebersicht(ergebnis)
+    zeige_uebersicht(geladen)
 
     # Rechenkern
-    daten = ergebnis.daten
-    bestandteile = masse_je_bestandteil(daten["aufbauten.csv"], daten["materialien.csv"])
+    daten = geladen.daten
+    einst = standard_einstellungen(daten)
+    ergebnis = berechne(daten, einst)
+    try:
+        such = suchbereich_aus_daten(daten)
+        optimierung, fehlertext = optimiere(daten, einst, such=such), None
+    except Berechnungsfehler as e:          # z. B. Parameter für die Optimierung fehlen
+        such, optimierung, fehlertext = None, None, str(e)
 
     # Ausgabe
-    zeige_masse(masse_je_schicht(bestandteile), masse_je_variante(bestandteile))
-    zeige_datei(schreibe_masse_csv(bestandteile, ERGEBNISORDNER))
-    return 0
+    traeger = daten["energietraeger.csv"].set_index("id").loc[einst.energietraeger_id, "name"]
+    zeige_einstellungen(einst, traeger, RUNDUNGSREGELN[einst.rundung])
+    if not ergebnis.schichten.empty:
+        zeige_masse(masse_je_schicht(ergebnis.schichten), masse_je_variante(ergebnis.schichten))
+    zeige_ergebnis(ergebnis)
+    zeige_optimierung(optimierung, such, fehlertext)
+    verlauf_df, _ = verlauf(daten, einst, ergebnis=ergebnis)
+    zeige_dateien(schreibe_ergebnisse(ergebnis, einst, ERGEBNISORDNER, optimierung, verlauf_df))
+    return 1 if ergebnis.fehler else 0
 
 
 if __name__ == "__main__":

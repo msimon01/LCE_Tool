@@ -1,2 +1,7 @@
-pandas>=2.3
-pytest>=8.0
+# Feste Versionen für eine reproduzierbare Umgebung (lokal und Streamlit Community Cloud).
+# Getestet mit Python 3.11 bis 3.14 (numpy 2.3.5 gibt es nicht für Python 3.10).
+streamlit==1.65.0
+pandas==2.3.3
+numpy==2.3.5
+altair==6.2.2
+pytest==9.2.0

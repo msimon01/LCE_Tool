@@ -15,3 +15,19 @@ co2_schattenpreis_hoch;680;€/t;UBA Methodenkonvention 3.1, Klimakosten 2020 be
 qng_grenzwert;24;kg CO2e/(m²·a);QNG-PLUS Wohngebäude, Anforderungswert Treibhausgase je m² NRF und Jahr (Anhangdokument prüfen);prüfen
 rsi_m2k_w;0.13;m²K/W;Wärmeübergangswiderstand horizontal innen;DIN EN ISO 6946
 rse_m2k_w;0.04;m²K/W;Wärmeübergangswiderstand horizontal außen;DIN EN ISO 6946
+ziel_u_w_m2k;0.20;W/(m²K);Ziel-U-Wert Außenwand für den Variantenvergleich, Festlegung der Gruppe (unter Referenzwert GModG 0,28);Annahme
+optimierung_toleranz;0.05;-;Optimaler Bereich: Wert höchstens 5 % über dem Minimum;Annahme
+optimierung_d_min_m;0.02;m;kleinste untersuchte Dicke der anpassbaren Schicht;Annahme
+optimierung_d_max_m;0.60;m;größte untersuchte Dicke der anpassbaren Schicht;Annahme
+optimierung_schritt_m;0.005;m;Schrittweite der Dickenvariation;Annahme
+sensitivitaet_kosten;0.20;-;Robustheit: Baustoff- und Abbruchkosten ± Anteil;Annahme
+sensitivitaet_energiepreis;0.20;-;Robustheit: Energiepreis ± Anteil;Annahme
+sensitivitaet_wirtschaft;0.20;-;Robustheit: Zins und Preissteigerungen ± Anteil (relativ);Annahme
+sensitivitaet_nutzungsdauer;0.20;-;Robustheit: Nutzungsdauern ± Anteil;Annahme
+sensitivitaet_kennwerte;0.10;-;Robustheit: GWP- und PENRT-Kennwerte der Baustoffe ± Anteil;Annahme
+sensitivitaet_energiefaktoren;0.10;-;Robustheit: Emissions- und Primärenergiefaktoren der Energieträger ± Anteil;Annahme
+sensitivitaet_heizgradstunden;0.10;-;Robustheit: Heizgradstunden ± Anteil;Annahme
+bewertung_gewicht_gwp;1;-;Gesamtbewertung: Gewicht GWP (relativ zu den anderen Gewichten);Annahme
+bewertung_gewicht_penrt;1;-;Gesamtbewertung: Gewicht PENRT;Annahme
+bewertung_gewicht_lcc;1;-;Gesamtbewertung: Gewicht Lebenszykluskosten;Annahme
+ziel_wanddicke_m;0.36;m;Zielwanddicke für den Vergleich bei gleicher Wanddicke (E06);Annahme

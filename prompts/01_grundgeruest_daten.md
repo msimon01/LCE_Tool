@@ -72,12 +72,12 @@ Test 2 von Hand nachstellen:
 4. Setzt den Wert danach wieder ein oder stellt die Datei mit Git zurück.
 
 
-# Antwort
+# Unsere Antwort 1
 
 Ja, doppelte IDs sind ein Fehler (materialien.csv: id, kosten.csv: material_id, energietraeger.csv: id, parameter.csv: schluessel, strom_szenario.csv: jahr; aufbauten.csv: position doppelt innerhalb einer Variante). Meldung mit Datei, beiden Zeilen und Spalte. Ergänze einen Test dazu. Zu Rückfrage 1: einverstanden.
 
 
-# Antwort der KI
+# Antwort der KI 1
 
 Die Prüfung auf doppelte Schlüssel ist eingebaut. Alle 32 Tests laufen grün, und mit den Originaldaten meldet python main.py weiterhin keine Fehler.
 

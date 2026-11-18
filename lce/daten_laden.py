@@ -85,6 +85,13 @@ SCHEMA: dict[str, Dateischema] = {
     ),
 }
 
+# Schlüssel in parameter.csv, die die Berechnung braucht
+PFLICHTPARAMETER: tuple[str, ...] = (
+    "zeitraum_a", "heizgradstunden_kkh", "zins", "preissteigerung_bau",
+    "preissteigerung_energie", "geg_referenz_u", "ziel_u_w_m2k",
+    "rsi_m2k_w", "rse_m2k_w", "startjahr",
+)
+
 # Ganzzahlige Spalten (werden nach erfolgreicher Prüfung als int gespeichert)
 GANZZAHLEN: dict[str, tuple[str, ...]] = {
     "aufbauten.csv": ("position", "anpassbar"),
@@ -337,26 +344,47 @@ def _in_zahlen_umwandeln(datei: str, df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def lade_daten(ordner: Path | str) -> Ladeergebnis:
-    """Lädt und prüft alle CSV-Dateien aus `ordner`. Sammelt alle Fehler."""
+def lies_rohdaten(ordner: Path | str) -> tuple[dict[str, pd.DataFrame], list[Meldung]]:
+    """Liest alle CSV-Dateien aus `ordner` als Text (ohne Prüfung der Inhalte)."""
     ordner = Path(ordner)
     roh: dict[str, pd.DataFrame] = {}
     fehler: list[Meldung] = []
-    hinweise: list[Meldung] = []
-
-    for datei, schema in SCHEMA.items():
+    for datei in SCHEMA:
         pfad = ordner / datei
         if not pfad.is_file():
             fehler.append(Meldung(datei, None, None, f"Datei fehlt ({pfad})"))
             continue
         try:
-            df = _lies_csv(pfad)
+            roh[datei] = _lies_csv(pfad)
         except (pd.errors.ParserError, pd.errors.EmptyDataError, UnicodeDecodeError) as e:
             fehler.append(Meldung(datei, None, None, f"Datei nicht lesbar: {e}"))
-            continue
-        fehler.extend(_pruefe_datei(datei, df, schema))
+    return roh, fehler
+
+
+def _pruefe_parameter(df: pd.DataFrame) -> list[Meldung]:
+    """Alle Schlüssel, die die Berechnung braucht, müssen in parameter.csv stehen."""
+    if "schluessel" not in df.columns:
+        return []
+    vorhanden = {str(s).strip() for s in df["schluessel"]}
+    return [Meldung("parameter.csv", None, "schluessel", f"Parameter '{s}' fehlt")
+            for s in PFLICHTPARAMETER if s not in vorhanden]
+
+
+def pruefe_rohdaten(roh: dict[str, pd.DataFrame],
+                    fehler_vorab: list[Meldung] | None = None) -> Ladeergebnis:
+    """Prüft eingelesene Rohdaten (alle Werte als Text). Sammelt alle Fehler.
+
+    Wird auch von der Oberfläche genutzt, um bearbeitete Aufbauten zu prüfen.
+    """
+    fehler: list[Meldung] = list(fehler_vorab or [])
+    hinweise: list[Meldung] = []
+    roh = {d: df.fillna("").astype(str) for d, df in roh.items()}
+
+    for datei, df in roh.items():
+        fehler.extend(_pruefe_datei(datei, df, SCHEMA[datei]))
         fehler.extend(_pruefe_eindeutig(datei, df))
-        roh[datei] = df
+    if "parameter.csv" in roh:
+        fehler.extend(_pruefe_parameter(roh["parameter.csv"]))
 
     # Querprüfungen gegen materialien.csv (nur wenn die ID-Spalte gelesen werden konnte)
     material_ids: set[str] | None = None
@@ -371,7 +399,7 @@ def lade_daten(ordner: Path | str) -> Ladeergebnis:
         fehler.extend(f)
         hinweise.extend(h)
 
-    if fehler:
+    if fehler or set(roh) != set(SCHEMA):
         return Ladeergebnis(daten=None, fehler=fehler, hinweise=hinweise)
 
     daten = {datei: _in_zahlen_umwandeln(datei, df) for datei, df in roh.items()}
@@ -383,6 +411,25 @@ def lade_daten(ordner: Path | str) -> Ladeergebnis:
         kind="stable",
     )
     return Ladeergebnis(daten=daten, fehler=[], hinweise=hinweise)
+
+
+def lade_daten(ordner: Path | str) -> Ladeergebnis:
+    """Lädt und prüft alle CSV-Dateien aus `ordner`. Sammelt alle Fehler."""
+    roh, fehler = lies_rohdaten(ordner)
+    return pruefe_rohdaten(roh, fehler)
+
+
+def parameter(daten: dict[str, pd.DataFrame], schluessel: str) -> float:
+    """Wert eines Schlüssels aus parameter.csv (Existenz ist beim Laden geprüft)."""
+    df = daten["parameter.csv"]
+    return float(df.loc[df["schluessel"] == schluessel, "wert"].iloc[0])
+
+
+def parameter_info(daten: dict[str, pd.DataFrame], schluessel: str) -> dict[str, str]:
+    """Einheit, Beschreibung und Status eines Parameters (für Hilfetexte)."""
+    df = daten["parameter.csv"]
+    zeile = df.loc[df["schluessel"] == schluessel].iloc[0]
+    return {s: str(zeile.get(s, "")) for s in ("einheit", "beschreibung", "status")}
 
 
 def zaehle_geschaetzt(daten: dict[str, pd.DataFrame]) -> dict[str, int]:
