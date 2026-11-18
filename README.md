@@ -27,7 +27,7 @@ Einmalig im Projektordner: `pip install -r requirements.txt`
 |---|---|
 | app.py | Oberfläche (Streamlit): Daten laden, Seitenleiste, Navigation |
 | seiten/ | Seiten der Oberfläche: Übersicht, Verlauf über die Zeit, Zielkonflikt, Optimale Dämmdicke, Robustheit, Details, Aufbauten, Projekt/Bericht/Export, Hilfe |
-| oberflaeche/ | gemeinsamer Zustand, Diagramme (Altair), Farben und Stil, Projektdatei, HTML-Bericht |
+| oberflaeche/ | gemeinsamer Zustand, Diagramme (Altair), Farben und Stil, Projektdatei, HTML-Bericht, Zugangsschutz |
 | main.py | Konsolenstart |
 | lce/ | Rechenkern ohne Bezug zu Ausgabe oder Oberfläche |
 | lce/einheiten.py | einzige Stelle für Einheitenumrechnungen |
@@ -128,6 +128,28 @@ verlinkte Version nicht während der Entwicklung.
    Branch `praesentation`, Datei `app.py`, unter „Advanced settings“ Python 3.12 wählen.
 4. Die vergebene Adresse als Link bzw. QR-Code weitergeben.
 
+## Zugangsschutz und geschützte Kosten (Secrets)
+
+Lizenzierte Werte (z. B. BKI-Kosten) dürfen nicht in das öffentliche Repository. Dafür nutzt
+das Tool Streamlit-Secrets; beides ist optional:
+
+- **Passwort** (`[zugang] passwort`): Die Oberfläche zeigt zuerst nur eine Passwortabfrage.
+  Link und QR-Code bleiben gleich, wer das Passwort kennt, kommt hinein. Die Anmeldung gilt
+  für die Sitzung im Browser. Es ist ein gemeinsames Passwort, keine persönliche Anmeldung.
+- **Kosten** (`[daten] kosten_csv`): Inhalt einer Kosten-CSV im Format von `daten/kosten.csv`.
+  Ist er gesetzt, nutzt die Oberfläche diese Kosten statt `daten/kosten.csv`, mit derselben
+  Prüfung wie beim Laden der Datei. Die Kosten-Tabelle wird dann auf der Seite
+  „Projekt, Bericht & Export“ nicht angezeigt. Die Ergebnisse (und deren CSV-Downloads)
+  enthalten die daraus gerechneten Kosten weiterhin – deshalb zusammen mit dem Passwort nutzen.
+- `daten/kosten.csv` im Repository enthält nur eigene Schätzwerte; `main.py` und die Tests
+  verwenden diese Datei.
+
+**Einrichten online:** share.streamlit.io → App → **⋮ → Settings → Secrets** → Inhalt nach
+der Vorlage `.streamlit/secrets.toml.beispiel` einfügen → **Save**. Die App startet neu.
+**Lokal testen:** die Vorlage als `.streamlit/secrets.toml` kopieren und ausfüllen
+(steht in `.gitignore`, wird nie hochgeladen). Was einmal in einem öffentlichen Repository
+committet wurde, bleibt in der Versionsgeschichte – lizenzierte Werte daher nie in `daten/`.
+
 ## Versionsverlauf
 
 | Prompt | Datum | Änderung |
@@ -144,3 +166,4 @@ verlinkte Version nicht während der Entwicklung.
 | E05 | 16.11.2026 | Seite „Zielkonflikt“: Punktwolke GWP/PENRT gegen Lebenszykluskosten, nicht übertroffene Varianten, Robustheits-Ampel |
 | E06 | 16.11.2026 | Vergleichsmodus „gleiche Wanddicke“ mit Zielwanddicke, U-Wert je Variante, Rangfolge beider Modi; Modus in allen Ausgaben gekennzeichnet |
 | E07 | 18.11.2026 | Vorbereitung Online-Bereitstellung: feste Paketversionen (Python 3.11–3.14), Speichern nur optional, Zwischenspeicher für Rechnungen, Handy-Darstellung, README-Abschnitt Online-Bereitstellung |
+| E08 | 18.11.2026 | Passwortschutz der Oberfläche und Kosten aus Streamlit-Secret (für lizenzierte Werte), Vorlage .streamlit/secrets.toml.beispiel |

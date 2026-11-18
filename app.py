@@ -12,10 +12,12 @@ import streamlit as st
 
 from lce.berechnung import MODI, MODUS_U_WERT, MODUS_WANDDICKE, standard_einstellungen
 from lce.bewertung import BEWERTUNG_PARAMETER
-from lce.daten_laden import lies_rohdaten, parameter, parameter_info, pruefe_rohdaten
+from lce.daten_laden import (lies_csv_text, lies_rohdaten, parameter, parameter_info,
+                             pruefe_rohdaten)
 from lce.einheiten import anteil_in_prozent, cm_in_m, m_in_cm, prozent_in_anteil
 from lce.oekobilanz import RUNDUNGSREGELN
 from oberflaeche.stil import css
+from oberflaeche.zugang import abmelden_knopf, kosten_aus_secret, zugang_pruefen
 from oberflaeche.zustand import (DATENORDNER, baue_kontext, editor_initialisieren,
                                  meldungen_text, optimierungsparameter_fehlen, standardwert)
 
@@ -23,8 +25,22 @@ st.set_page_config(page_title="LCE-Tool Außenwand", page_icon="🧱", layout="w
                    initial_sidebar_state="auto")  # Handy: eingeklappt
 css()
 
+# --------------------------------------------------------------------------- Zugang (E08)
+if not zugang_pruefen():
+    st.stop()
+
 # --------------------------------------------------------------------------- Daten
 roh, lesefehler = lies_rohdaten(DATENORDNER)
+kosten_text = kosten_aus_secret()
+if kosten_text is not None:
+    # Kosten aus dem geschützten Speicher statt daten/kosten.csv (z. B. lizenzierte BKI-Werte)
+    try:
+        roh["kosten.csv"] = lies_csv_text(kosten_text)
+        lesefehler = [m for m in lesefehler if m.datei != "kosten.csv"]
+    except Exception as e:  # noqa: BLE001 – jede Lesestörung als Datenfehler melden
+        from lce.daten_laden import Meldung
+        lesefehler.append(Meldung("kosten.csv (Secret)", None, None, f"nicht lesbar: {e}"))
+st.session_state["kosten_quelle"] = "Secret" if kosten_text is not None else "daten/kosten.csv"
 basis = pruefe_rohdaten(roh, lesefehler)
 if not basis.ok:
     st.title("LCE-Tool Außenwand")
@@ -160,6 +176,8 @@ einst = standard.mit(ziel_u_w_m2k=float(s.e_ziel_u), zeitraum_a=int(s.e_zeitraum
 such_werte = (cm_in_m(s.e_d_min), cm_in_m(s.e_d_max), cm_in_m(s.e_schritt),
               prozent_in_anteil(s.e_tol)) if mit_optimum else None
 gewichte = {kr: float(s[f"e_w_{kr}"]) for kr in BEWERTUNG_PARAMETER} if mit_bewertung else None
+
+abmelden_knopf()
 
 # --------------------------------------------------------------------------- Rechnen
 baue_kontext(roh, basis, einst, list(s.e_auswahl), such_werte, gewichte)

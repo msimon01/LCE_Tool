@@ -95,7 +95,13 @@ st.markdown("### Eingangsdaten (daten/)")
 for h in k.basis.hinweise:
     st.caption(f"⚠ {h}")
 anzahl = zaehle_geschaetzt(k.daten_basis)
+kosten_geschuetzt = st.session_state.get("kosten_quelle") == "Secret"
+if kosten_geschuetzt:
+    st.caption("🔒 Die Kosten stammen aus einem geschützten Datensatz und werden hier nicht als "
+               "Tabelle angezeigt.")
 for datei, df in k.daten_basis.items():
+    if kosten_geschuetzt and datei == "kosten.csv":
+        continue
     extra = f" · {anzahl[datei]} × „geschätzt“" if anzahl.get(datei) else ""
     with st.expander(f"{datei} · {len(df)} Zeilen{extra}"):
         st.dataframe(df, hide_index=True, width="stretch")

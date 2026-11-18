@@ -190,7 +190,19 @@ def zerlege_material(text: str) -> list[tuple[str, float]]:
     return bestandteile
 
 
-def _lies_csv(pfad: Path) -> pd.DataFrame:
+def lies_csv_text(text: str) -> pd.DataFrame:
+    """Liest CSV-Inhalt aus einem Text (z. B. aus einem Streamlit-Secret, E08) wie eine Datei.
+
+    Führende und folgende Leerzeichen je Zeile werden entfernt (Einrückung im Secret).
+    Zeilennummern in Meldungen zählen wie in einer Datei (Kopfzeile = 1).
+    """
+    import io
+
+    bereinigt = "\n".join(z.strip() for z in str(text).strip().splitlines())
+    return _lies_csv(io.StringIO(bereinigt))
+
+
+def _lies_csv(pfad) -> pd.DataFrame:
     """Liest eine CSV vollständig als Text. Leere Felder bleiben "" (nie 0 oder NaN)."""
     df = pd.read_csv(
         pfad,

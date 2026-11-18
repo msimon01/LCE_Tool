@@ -188,7 +188,7 @@ def erstelle_bericht(k, titel: str = "Variantenvergleich Außenwand") -> str:
 vereinfacht über Heizgradstunden abgebildet.</li>
 <li>Inhomogene Schichten mit flächengemitteltem λ (vereinfacht), keine Wärmebrücken,
 kein Gesamtgebäude.</li>
-<li>Kosten überwiegend Schätzwerte (Status „geschätzt“ in daten/kosten.csv).</li>
+<li>Kosten: Herkunft und Status je Variante siehe Kennzeichnung „enthält geschätzte Werte“.</li>
 <li>Kennwerte: ÖKOBAUDAT, Nutzungsdauern: BBSR; Quellen je Wert in daten/.</li></ul>""")
     teile.append("<div class='fuss'>LCE-Tool · TH Köln, Modul Life-Cycle-Engineering</div>")
 
